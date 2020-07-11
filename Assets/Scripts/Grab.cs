@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Grab : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Grab : MonoBehaviour
     public bool GrabingOrgan = false;
     public bool OrganInRange = false;
     private Organo OrganoAgarrando;
+
+    public Image GrabIndicator;
 
     void Update()
     {
@@ -33,11 +36,13 @@ public class Grab : MonoBehaviour
             if(hit.transform.tag == "Organo")
             {
                 OrganInRange = true;
+                GrabIndicator.color = Color.green;
             }
         }
         else
         {
             OrganInRange = false;
+            GrabIndicator.color = Color.red;
         }
 
         if (Input.GetMouseButtonDown(0) && OrganInRange)
