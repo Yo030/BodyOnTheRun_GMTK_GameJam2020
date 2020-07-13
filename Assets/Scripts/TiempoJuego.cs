@@ -11,6 +11,7 @@ public class TiempoJuego : MonoBehaviour
     public float GameTime;
 
     [Header("Pantallas")]
+    public float TimeForScreenAppere = 3.0f;
     public GameObject PantallaGanar;
     public GameObject PantallaPerder;
 
@@ -35,22 +36,31 @@ public class TiempoJuego : MonoBehaviour
 
         if(Ganar == true)
         {
-            PantallaGanar.SetActive(true);
-            DeactivateScripts();
-            return;
+            TimeForScreenAppere -= Time.deltaTime;
+            if(TimeForScreenAppere < 0)
+            {
+                PantallaGanar.SetActive(true);
+                DeactivateScripts();
+                return;
+            }
         }
 
-        if(GameTime > 0.9999 && Ganar == false)
+        if (GameTime > 0.9999 && Ganar == false)
         {
             GameTime -= Time.deltaTime;
             string Minutes = Mathf.FloorToInt(GameTime / 60).ToString("00");
             string Seconds = Mathf.FloorToInt(GameTime % 60).ToString("00");
             TimeText.text = string.Format("{0:00}:{1:00}", Minutes, Seconds);
         }
-        else if(GameTime <= 0.9999)
+        else if (GameTime <= 0.9999)
         {
-            PantallaPerder.SetActive(true);
             DeactivateScripts();
+
+            TimeForScreenAppere -= Time.deltaTime;
+            if (TimeForScreenAppere < 0)
+            {
+                PantallaPerder.SetActive(true);
+            }
         }
     }
 
